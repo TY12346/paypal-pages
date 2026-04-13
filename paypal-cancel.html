@@ -21,7 +21,7 @@
       border-radius: 12px;
       max-width: 420px;
       width: 90%;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
       text-align: center;
     }
 
@@ -55,14 +55,14 @@
   <div class="card">
     <h1>Payment Cancelled</h1>
     <p>You cancelled the PayPal sandbox payment.</p>
-    <p>Return to the app and try again if needed.</p>
+    <p>Tap below to return to the app.</p>
 
-    <button onclick="goBack()">Back</button>
+    <button onclick="goBackToApp()">Back to App</button>
   </div>
 
   <script>
-    function goBack() {
-      window.close();
+    function goBackToApp() {
+      window.location.href = "myapp://payment-cancel";
     }
   </script>
 </body>
