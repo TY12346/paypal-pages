@@ -21,7 +21,7 @@
       border-radius: 12px;
       max-width: 420px;
       width: 90%;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
       text-align: center;
     }
 
@@ -64,11 +64,11 @@
   <div class="card">
     <h1>Payment Approved</h1>
     <p>Your PayPal sandbox payment was approved successfully.</p>
-    <p>Return to the app and tap <strong>Confirm Payment</strong>.</p>
+    <p>Tap the button below to return to the app.</p>
 
     <div class="info" id="infoBox"></div>
 
-    <button onclick="goBack()">Back to App</button>
+    <button onclick="goBackToApp()">Back to App</button>
   </div>
 
   <script>
@@ -76,17 +76,18 @@
     const token = params.get("token") || "";
     const payerId = params.get("PayerID") || "";
 
-    const infoBox = document.getElementById("infoBox");
-    infoBox.innerHTML = `
+    document.getElementById("infoBox").innerHTML = `
       <strong>PayPal Order Token:</strong><br>${token || "N/A"}<br><br>
       <strong>Payer ID:</strong><br>${payerId || "N/A"}
     `;
 
-    function goBack() {
-      const params = new URLSearchParams(window.location.search);
-      const token = params.get("token");
+    function goBackToApp() {
+      if (!token) {
+        alert("Missing PayPal token.");
+        return;
+      }
 
-      window.location.href = `myapp://payment-success?orderId=${token}`;
+      window.location.href = `myapp://payment-success?orderId=${encodeURIComponent(token)}`;
     }
   </script>
 </body>
