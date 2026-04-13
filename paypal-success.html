@@ -21,74 +21,34 @@
       border-radius: 12px;
       max-width: 420px;
       width: 90%;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
       text-align: center;
     }
 
     h1 {
       color: #2e7d32;
-      margin-bottom: 12px;
-    }
-
-    p {
-      color: #444;
-      line-height: 1.5;
-    }
-
-    .info {
-      margin-top: 16px;
-      padding: 12px;
-      background: #f2f2f2;
-      border-radius: 8px;
-      font-size: 14px;
-      word-break: break-word;
-    }
-
-    button {
-      margin-top: 20px;
-      background: #2e7d32;
-      color: white;
-      border: none;
-      padding: 12px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    button:hover {
-      opacity: 0.95;
     }
   </style>
 </head>
 <body>
   <div class="card">
     <h1>Payment Approved</h1>
-    <p>Your PayPal sandbox payment was approved successfully.</p>
-    <p>Tap the button below to return to the app.</p>
-
-    <div class="info" id="infoBox"></div>
-
-    <button onclick="goBackToApp()">Back to App</button>
+    <p>Returning to app...</p>
   </div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token") || "";
-    const payerId = params.get("PayerID") || "";
 
-    document.getElementById("infoBox").innerHTML = `
-      <strong>PayPal Order Token:</strong><br>${token || "N/A"}<br><br>
-      <strong>Payer ID:</strong><br>${payerId || "N/A"}
-    `;
+    const deepLink =
+      "myapp://payment-success?orderId=" + encodeURIComponent(token);
 
-    function goBackToApp() {
-      if (!token) {
-        alert("Missing PayPal token.");
-        return;
-      }
+    // 🚀 AUTO redirect
+    window.location.href = deepLink;
 
-      window.location.href = `myapp://payment-success?orderId=${encodeURIComponent(token)}`;
-    }
+    // fallback (important)
+    setTimeout(() => {
+      window.location.href = deepLink;
+    }, 1000);
   </script>
 </body>
 </html>
